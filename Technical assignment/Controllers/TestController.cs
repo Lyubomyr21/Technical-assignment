@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Technical_assignment.Data;
 using Technical_assignment.Models;
 
 namespace Technical_assignment.Controllers
@@ -15,7 +17,7 @@ namespace Technical_assignment.Controllers
                     Name ="Spider Man",
                     FirstName = "Peter",
                     LastName = "Parker",
-                    Place = "New York City"
+                    Place = "New York"
                 },
                 new TestModel {
                     Id = 2,
@@ -26,10 +28,17 @@ namespace Technical_assignment.Controllers
                 }
             };
 
+        private readonly DataContext _context;
+
+        public TestController(DataContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<TestModel>>> Get()
         {
-            return Ok(heroes);
+            return Ok(await _context.testModels.ToListAsync());
         }
 
         [HttpGet("{id}")]
