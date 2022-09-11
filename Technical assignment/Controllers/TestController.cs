@@ -24,9 +24,7 @@ namespace Technical_assignment.Controllers
                     LastName = "Stark",
                     Place = "Long Island"
                 }
-
             };
-
 
         [HttpGet]
         public async Task<ActionResult<List<TestModel>>> Get()
