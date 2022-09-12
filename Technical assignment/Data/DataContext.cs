@@ -9,6 +9,7 @@ namespace Technical_assignment.Data
 
         public DbSet<TestModel> testModels { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<Incident> Incidents { get; set; }
     }
 }

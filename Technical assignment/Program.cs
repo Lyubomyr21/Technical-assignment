@@ -1,5 +1,6 @@
+global using Technical_assignment.Data;
 using Microsoft.EntityFrameworkCore;
-using Technical_assignment.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
