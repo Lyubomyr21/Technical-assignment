@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Technical_assignment.Data;
 
@@ -10,9 +11,10 @@ using Technical_assignment.Data;
 namespace Technical_assignment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220912035412_AccountContactRelation")]
+    partial class AccountContactRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,7 @@ namespace Technical_assignment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IncidentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("IncidentId");
 
                     b.ToTable("Account");
                 });
@@ -73,23 +70,6 @@ namespace Technical_assignment.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("Technical_assignment.Models.Incident", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("IncidentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Incidents");
-                });
-
             modelBuilder.Entity("Technical_assignment.Models.TestModel", b =>
                 {
                     b.Property<int>("Id")
@@ -117,17 +97,6 @@ namespace Technical_assignment.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("testModels");
-                });
-
-            modelBuilder.Entity("Technical_assignment.Models.Account", b =>
-                {
-                    b.HasOne("Technical_assignment.Models.Incident", "Incident")
-                        .WithMany()
-                        .HasForeignKey("IncidentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Incident");
                 });
 
             modelBuilder.Entity("Technical_assignment.Models.Contact", b =>

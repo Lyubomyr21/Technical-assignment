@@ -1,0 +1,13 @@
+﻿namespace Technical_assignment.Models
+{
+    public class Contact
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+
+        public Account Account { get; set; }
+        public int AccountId { get; set; }
+    }
+}
