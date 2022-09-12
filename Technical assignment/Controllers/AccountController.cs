@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Technical_assignment.Interfaces;
 using Technical_assignment.Models;
 
 namespace Technical_assignment.Controllers
@@ -9,26 +10,28 @@ namespace Technical_assignment.Controllers
     public class AccountController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IAccountService _accountService;
 
-        public AccountController(DataContext context)
+        public AccountController(DataContext context, IAccountService accountService)
         {
+            _accountService = accountService;
             _context = context;
         }
 
         [HttpGet("All")]
-        public async Task<ActionResult<List<Account>>> Get()
+        public async Task<ActionResult<List<Account>>> GetAll()
         {
-            return Ok(await _context.Accounts.ToListAsync());
+            var accounts = await _accountService.GetAllAccounts();
+            if (accounts == null) return NotFound();
+            else return Ok(accounts);
         }
 
         [HttpGet("ByIncidentId")]
-        public async Task<ActionResult<List<Account>>> GetAccountsByIncident(int IncidentId)
+        public async Task<ActionResult<List<Account>>> GetAccountsByIncident(int Id)
         {
-            var accounts = await _context.Accounts
-                .Where(x => x.IncidentId == IncidentId)
-                .ToListAsync();
-
-            return Ok(accounts);
+            var contacts = await _accountService.GetAccountsByIncident(Id);
+            if (contacts == null) return NotFound();
+            else return Ok(contacts);
         }
     }
 }
