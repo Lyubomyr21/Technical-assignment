@@ -21,7 +21,7 @@ namespace Technical_assignment.Controllers
             return Ok(await _context.Accounts.ToListAsync());
         }
 
-        [HttpGet("ByAccountId")]
+        [HttpGet("ByIncidentId")]
         public async Task<ActionResult<List<Account>>> GetAccountsByIncident(int IncidentId)
         {
             var accounts = await _context.Accounts
