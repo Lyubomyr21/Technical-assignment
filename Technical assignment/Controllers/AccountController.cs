@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Technical_assignment.Data_transfer_objects;
 using Technical_assignment.Interfaces;
 using Technical_assignment.Models;
 
@@ -32,6 +33,16 @@ namespace Technical_assignment.Controllers
             var contacts = await _accountService.GetAccountsByIncident(Id);
             if (contacts == null) return NotFound();
             else return Ok(contacts);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult<List<Account>>> Create(CreateAccountDto request)
+        {
+            var accounts = await _accountService.CreateAccount(request);
+
+            if (accounts == null) return NotFound();
+            else return Ok(accounts);
         }
     }
 }
