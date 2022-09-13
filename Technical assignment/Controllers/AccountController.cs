@@ -27,6 +27,7 @@ namespace Technical_assignment.Controllers
             else return Ok(accounts);
         }
 
+
         [HttpGet("ByIncidentId")]
         public async Task<ActionResult<List<Account>>> GetAccountsByIncident(int Id)
         {

@@ -8,9 +8,11 @@ namespace Technical_assignment.Services
     public class ContactService : IContactService
     {
         private DataContext _context;
-               
-        public ContactService(DataContext context)
+        private readonly IAccountService _accountService;
+
+        public ContactService(DataContext context, IAccountService accountService)
         {
+            _accountService = accountService;
             _context = context;
         }
 
@@ -30,20 +32,42 @@ namespace Technical_assignment.Services
 
         public async Task<List<Contact>> CreateContact(ContactAccountDto request)
         {
+            var allAccounts = await _accountService.GetAllAccounts();
             var account = await _context.Accounts.FindAsync(request.AccountId);
 
-            var newContact = new Contact
+            var contact = _context.Contacts.ToListAsync().Result.FirstOrDefault(e => e.Email.Equals(request.Email));
+
+            if (contact is not null){
+                contact.FirstName = request.FirstName;
+                contact.LastName = request.LastName;
+                if (contact.Account != account)
+                    contact.Account = account;
+                else if (allAccounts.Any(x => x.Id != account.Id)){
+                    contact.Account = allAccounts.FirstOrDefault(x => x.Id != account.Id);
+                }
+                else
+                {
+                    throw new Exception("No fitting account"); 
+                }
+
+                await _context.SaveChangesAsync();
+                return await GetContactsByAccount(contact.AccountId);
+            }
+            else
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Account = account
-            };
+                var newContact = new Contact
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Email = request.Email,
+                    Account = account
+                };
 
-            _context.Contacts.Add(newContact);
-            await _context.SaveChangesAsync();
+                _context.Contacts.Add(newContact);
+                await _context.SaveChangesAsync();
 
-            return await GetContactsByAccount(newContact.AccountId);
+                return await GetContactsByAccount(newContact.AccountId);
+            }
 
         }
     }

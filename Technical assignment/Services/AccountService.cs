@@ -8,11 +8,9 @@ namespace Technical_assignment.Services
     public class AccountService : IAccountService
     {
         private DataContext _context;
-        private readonly IContactService _contactService;
 
-        public AccountService(DataContext context, IContactService contactService)
+        public AccountService(DataContext context)
         {
-            _contactService = contactService;
             _context = context;
         }
 
@@ -55,9 +53,7 @@ namespace Technical_assignment.Services
             _context.Contacts.Add(newContact);
             await _context.SaveChangesAsync();
 
-
             return await GetAccountsByIncident(newAccount.IncidentId);
-
         }
     }
 }
