@@ -11,8 +11,8 @@ using Technical_assignment.Data;
 namespace Technical_assignment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220912035412_AccountContactRelation")]
-    partial class AccountContactRelation
+    [Migration("20220913153547_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,11 +33,23 @@ namespace Technical_assignment.Migrations
 
                     b.Property<string>("AccountName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IncidentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Account");
+                    b.HasIndex("AccountName")
+                        .IsUnique();
+
+                    b.HasIndex("IncidentName");
+
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("Technical_assignment.Models.Contact", b =>
@@ -53,7 +65,7 @@ namespace Technical_assignment.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -67,36 +79,40 @@ namespace Technical_assignment.Migrations
 
                     b.HasIndex("AccountId");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("Technical_assignment.Models.TestModel", b =>
+            modelBuilder.Entity("Technical_assignment.Models.Incident", b =>
                 {
+                    b.Property<string>("IncidentName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("IncidentName");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("Id")
+                        .IsUnique();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.ToTable("Incidents");
+                });
 
-                    b.Property<string>("Place")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Technical_assignment.Models.Account", b =>
+                {
+                    b.HasOne("Technical_assignment.Models.Incident", "Incident")
+                        .WithMany()
+                        .HasForeignKey("IncidentName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("Id");
-
-                    b.ToTable("testModels");
+                    b.Navigation("Incident");
                 });
 
             modelBuilder.Entity("Technical_assignment.Models.Contact", b =>

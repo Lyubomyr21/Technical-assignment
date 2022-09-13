@@ -36,12 +36,16 @@ namespace Technical_assignment.Migrations
                     b.Property<int>("IncidentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("IncidentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccountName")
                         .IsUnique();
 
-                    b.HasIndex("IncidentId");
+                    b.HasIndex("IncidentName");
 
                     b.ToTable("Accounts");
                 });
@@ -81,17 +85,19 @@ namespace Technical_assignment.Migrations
 
             modelBuilder.Entity("Technical_assignment.Models.Incident", b =>
                 {
+                    b.Property<string>("IncidentName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("IncidentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("IncidentName");
 
-                    b.HasKey("Id");
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Incidents");
                 });
@@ -100,7 +106,7 @@ namespace Technical_assignment.Migrations
                 {
                     b.HasOne("Technical_assignment.Models.Incident", "Incident")
                         .WithMany()
-                        .HasForeignKey("IncidentId")
+                        .HasForeignKey("IncidentName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

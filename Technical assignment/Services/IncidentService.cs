@@ -27,7 +27,7 @@ namespace Technical_assignment.Services
         {
             var newIncident = new Incident
             {
-                IncidentName = request.IncidentName,
+                IncidentName = Guid.NewGuid().ToString()
             };
 
             _context.Incidents.Add(newIncident);
