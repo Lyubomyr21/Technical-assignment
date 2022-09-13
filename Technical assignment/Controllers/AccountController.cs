@@ -37,7 +37,7 @@ namespace Technical_assignment.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<List<Account>>> Create(CreateAccountDto request)
+        public async Task<ActionResult<List<Account>>> Create(AccountIncidentDto request)
         {
             var accounts = await _accountService.CreateAccount(request);
 

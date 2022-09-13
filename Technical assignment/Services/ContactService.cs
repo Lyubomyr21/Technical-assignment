@@ -28,23 +28,23 @@ namespace Technical_assignment.Services
             return contacts;
         }
 
-        //public async Task<List<Contact>> CreateContact(CreateContactDto request)
-        //{
-        //    var account = await _context.Accounts.FindAsync(request.AccountId);
+        public async Task<List<Contact>> CreateContact(ContactAccountDto request)
+        {
+            var account = await _context.Accounts.FindAsync(request.AccountId);
 
-        //    var newContact = new Contact
-        //    {
-        //        FirstName = request.FirstName,
-        //        LastName = request.LastName,
-        //        Email = request.Email,
-        //        Account = account
-        //    };
+            var newContact = new Contact
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Account = account
+            };
 
-        //    _context.Contacts.Add(newContact);
-        //    await _context.SaveChangesAsync();
+            _context.Contacts.Add(newContact);
+            await _context.SaveChangesAsync();
 
-        //    return await GetContactsByAccount(newContact.AccountId);
+            return await GetContactsByAccount(newContact.AccountId);
 
-        //}
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace Technical_assignment.Interfaces
     public interface IIncidentService
     {
         public Task<List<Incident>> GetAllIncidents();
-        public Task<List<Incident>> CreateIncident(CreateIncidentDto request);
+        public Task<List<Incident>> CreateIncident(IncidentDto request);
     }
 }

@@ -30,7 +30,7 @@ namespace Technical_assignment.Services
             return accounts;
         }
         
-        public async Task<List<Account>> CreateAccount(CreateAccountDto request)
+        public async Task<List<Account>> CreateAccount(AccountIncidentDto request)
         {
             var incident = await _context.Incidents.FindAsync(request.IncidentId);
 

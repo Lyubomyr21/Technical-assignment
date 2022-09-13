@@ -28,7 +28,7 @@ namespace Technical_assignment.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Incident>>> Create(CreateIncidentDto request)
+        public async Task<ActionResult<List<Incident>>> Create(IncidentDto request)
         {
             var incidents = await _incidentService.CreateIncident(request);
 

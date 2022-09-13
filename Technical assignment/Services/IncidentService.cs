@@ -23,7 +23,7 @@ namespace Technical_assignment.Services
             return await _context.Incidents.ToListAsync();
         }
 
-        public async Task<List<Incident>> CreateIncident(CreateIncidentDto request)
+        public async Task<List<Incident>> CreateIncident(IncidentDto request)
         {
             var newIncident = new Incident
             {

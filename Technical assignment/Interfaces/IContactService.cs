@@ -7,6 +7,6 @@ namespace Technical_assignment.Interfaces
     {
         public Task<List<Contact>> GetAllContacts();
         public Task<List<Contact>> GetContactsByAccount(int AccountId);
-        //public Task<List<Contact>> CreateContact(CreateContactDto request);
+        public Task<List<Contact>> CreateContact(ContactAccountDto request);
     }
 }

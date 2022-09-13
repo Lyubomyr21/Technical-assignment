@@ -1,6 +1,6 @@
 ﻿namespace Technical_assignment.Data_transfer_objects
 {
-    public class CreateContactDto
+    public class ContactDto
     {
         public string FirstName { get; set; } = "Contact_def_fn";
         public string LastName { get; set; } = "Contact_def_ln";

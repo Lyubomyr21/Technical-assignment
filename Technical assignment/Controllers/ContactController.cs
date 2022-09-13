@@ -36,12 +36,12 @@ namespace Technical_assignment.Controllers
             else return Ok(contacts);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<List<Contact>>> Create(CreateContactDto request)
-        //{
-        //    var contacts = await _contactService.CreateContact(request);
-        //    if (contacts == null) return NotFound();
-        //    else return Ok(contacts);
-        //}
+        [HttpPost]
+        public async Task<ActionResult<List<Contact>>> Create(ContactAccountDto request)
+        {
+            var contacts = await _contactService.CreateContact(request);
+            if (contacts == null) return NotFound();
+            else return Ok(contacts);
+        }
     }
 }

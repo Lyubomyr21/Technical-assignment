@@ -7,6 +7,6 @@ namespace Technical_assignment.Interfaces
     {
         public Task<List<Account>> GetAllAccounts();
         public Task<List<Account>> GetAccountsByIncident(int IncidentId);
-        public Task<List<Account>> CreateAccount(CreateAccountDto request);
+        public Task<List<Account>> CreateAccount(AccountIncidentDto request);
     }
 }
