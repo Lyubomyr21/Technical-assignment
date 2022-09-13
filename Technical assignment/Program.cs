@@ -1,5 +1,7 @@
+global using Technical_assignment.Data;
 using Microsoft.EntityFrameworkCore;
-using Technical_assignment.Data;
+using Technical_assignment.Interfaces;
+using Technical_assignment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IIncidentService, IncidentService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 
