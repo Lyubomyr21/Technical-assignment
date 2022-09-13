@@ -16,8 +16,6 @@ namespace Technical_assignment.Services
             _context = context;
         }
 
-
-
         public async Task<List<Account>> GetAllAccounts()
         {
             return await _context.Accounts.ToListAsync();
@@ -32,8 +30,6 @@ namespace Technical_assignment.Services
             return accounts;
         }
         
-
-
         public async Task<List<Account>> CreateAccount(CreateAccountDto request)
         {
             var incident = await _context.Incidents.FindAsync(request.IncidentId);
