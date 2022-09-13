@@ -25,19 +25,26 @@ namespace Technical_assignment.Services
 
         public async Task<List<Incident>> CreateIncident(IncidentDto request)
         {
+            var guidName = Guid.NewGuid().ToString();
             var newIncident = new Incident
             {
-                IncidentName = Guid.NewGuid().ToString()
+                IncidentName = guidName,
+                IncidentDescription = request.IncidentDescription,
             };
 
             _context.Incidents.Add(newIncident);
             await _context.SaveChangesAsync();
 
+            var incident = await _context.Incidents.FindAsync(guidName);
+
             var newAccount = new Account
             {
                 AccountName = request.Account.AccountName,
-                Incident = newIncident
+                Incident = incident,
+                IncidentId = incident.Id
             };
+
+            
 
             _context.Accounts.Add(newAccount);
 

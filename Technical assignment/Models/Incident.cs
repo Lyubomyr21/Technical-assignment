@@ -11,5 +11,6 @@ namespace Technical_assignment.Models
         public int Id { get; set; }
         [Key]
         public string IncidentName { get; set; }
+        public string IncidentDescription { get; set; }
     }
 }

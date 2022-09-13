@@ -27,7 +27,6 @@ namespace Technical_assignment.Services
 
         public async Task<Account> GetAccountByAccountName(string AccountName)
         {
-            //var account = await _context.Accounts.FindAsync(AccountName);
             var account = await _context.Accounts.Where(m => m.AccountName == AccountName).ToListAsync();
             return account.FirstOrDefault();
         }
@@ -43,13 +42,14 @@ namespace Technical_assignment.Services
         
         public async Task<List<Account>> CreateAccount(AccountIncidentDto request)
         {
-            var incident = await _context.Incidents.FindAsync(request.IncidentId);
+            var incident = _context.Incidents.ToListAsync().Result.FirstOrDefault(x => x.Id == request.IncidentId);
             var allAccounts = await GetAllAccounts();
 
             var newAccount = new Account
             {
                 AccountName = request.AccountName,
-                Incident = incident
+                Incident = incident,
+                IncidentId = incident.Id
             };
 
             var account = newAccount;
