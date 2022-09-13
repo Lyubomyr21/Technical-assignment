@@ -41,18 +41,55 @@ namespace Technical_assignment.Services
 
             _context.Accounts.Add(newAccount);
 
-            await _context.SaveChangesAsync();
+            var allAccounts = await _accountService.GetAllAccounts();
+            var account = newAccount;
+            var contact = _context.Contacts.ToListAsync().Result.FirstOrDefault(e => e.Email.Equals(request.Contact.Email));
 
-            var newContact = new Contact
+            if (contact is not null)
             {
-                FirstName = request.Contact.FirstName,
-                LastName = request.Contact.LastName,
-                Email = request.Contact.Email,
-                Account = newAccount
-            };
+                contact.FirstName = request.Contact.FirstName;
+                contact.LastName = request.Contact.LastName;
+                if (contact.Account != account)
+                {
+                    contact.Account = account;
+                }
+                else if (allAccounts.Any(x => x.Id != account.Id))
+                {
+                    contact.Account = allAccounts.FirstOrDefault(x => x.Id != account.Id);
+                }
+                else
+                {
+                    throw new Exception("No fitting account");
+                }
 
-            _context.Contacts.Add(newContact);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                var newContact = new Contact
+                {
+                    FirstName = request.Contact.FirstName,
+                    LastName = request.Contact.LastName,
+                    Email = request.Contact.Email,
+                    Account = account
+                };
+
+                _context.Contacts.Add(newContact);
+                await _context.SaveChangesAsync();
+            }
+
+            //await _context.SaveChangesAsync();
+
+            //var newContact = new Contact
+            //{
+            //    FirstName = request.Contact.FirstName,
+            //    LastName = request.Contact.LastName,
+            //    Email = request.Contact.Email,
+            //    Account = newAccount
+            //};
+
+            //_context.Contacts.Add(newContact);
+            //await _context.SaveChangesAsync();
 
 
             return await GetAllIncidents();
