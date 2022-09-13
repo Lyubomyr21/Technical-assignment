@@ -78,22 +78,7 @@ namespace Technical_assignment.Services
                 await _context.SaveChangesAsync();
             }
 
-            //await _context.SaveChangesAsync();
-
-            //var newContact = new Contact
-            //{
-            //    FirstName = request.Contact.FirstName,
-            //    LastName = request.Contact.LastName,
-            //    Email = request.Contact.Email,
-            //    Account = newAccount
-            //};
-
-            //_context.Contacts.Add(newContact);
-            //await _context.SaveChangesAsync();
-
-
             return await GetAllIncidents();
-
         }
     }
 }

@@ -19,6 +19,19 @@ namespace Technical_assignment.Services
             return await _context.Accounts.ToListAsync();
         }
 
+        public async Task<Account> GetAccountByID(int AccountId)
+        {
+            var account = await _context.Accounts.FindAsync(AccountId);
+            return account;
+        }
+
+        public async Task<Account> GetAccountByAccountName(string AccountName)
+        {
+            //var account = await _context.Accounts.FindAsync(AccountName);
+            var account = await _context.Accounts.Where(m => m.AccountName == AccountName).ToListAsync();
+            return account.FirstOrDefault();
+        }
+
         public async Task<List<Account>> GetAccountsByIncident(int IncidentId)
         {
             var accounts = await _context.Accounts

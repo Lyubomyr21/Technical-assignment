@@ -21,6 +21,12 @@ namespace Technical_assignment.Services
             return await _context.Contacts.ToListAsync();
         }
 
+        public async Task<Contact> GetContactById(int ContactId)
+        {
+            var contact = await _context.Contacts.FindAsync(ContactId);
+            return contact;
+        }
+
         public async Task<List<Contact>> GetContactsByAccount(int AccountId)
         {
             var contacts = await _context.Contacts

@@ -27,8 +27,15 @@ namespace Technical_assignment.Controllers
             else return Ok(contacts);
         }
 
-        [HttpGet("id")]
+        [HttpGet("ById")]
+        public async Task<ActionResult<Contact>> GetContact(int Id)
+        {
+            var contact = await _contactService.GetContactById(Id);
+            if (contact == null) return NotFound();
+            else return Ok(contact);
+        }
 
+        [HttpGet("ByAccountId")]
         public async Task<ActionResult<List<Contact>>> Get(int Id)
         {
             var contacts = await _contactService.GetContactsByAccount(Id);
